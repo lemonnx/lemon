@@ -1,0 +1,235 @@
+:root {
+  --bg: #f4f6fb;
+  --card: #FFE411;
+  --muted: #aab2c0;
+  --text: #f4f6fb;
+  --primary: #5ac8fa;
+  --danger: #ff3b30;
+  --success: #34c759;
+  --warning: #ff9f0a;
+  --outline: #2a2f3a;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+.container {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--outline);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.tabs {
+  display: inline-flex;
+  gap: 8px;
+  background: #9EE7F9;
+  border: 1px solid var(--outline);
+  padding: 4px;
+  border-radius: 10px;
+}
+
+.tab {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  color: var(--muted);
+  cursor: pointer;
+  background: transparent;
+}
+.tab[aria-selected="true"] {
+  background: var(--card);
+  color: var(--text);
+  border-color: var(--outline);
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 180px 120px 100px;
+  gap: 8px;
+}
+
+input[type="text"], textarea, input[type="datetime-local"] {
+  width: 100%;
+  background: #f4f6fb;
+  color: var(--text);
+  border: 1px solid var(--outline);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+textarea { resize: vertical; min-height: 44px; max-height: 160px; }
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+.switch input {
+  appearance: none;
+  width: 44px;
+  height: 24px;
+  background: #f4f6fb;
+  border: 1px solid var(--outline);
+  border-radius: 999px;
+  position: relative;
+  outline: none;
+  cursor: pointer;
+}
+.switch input:checked {
+  background: #f4f6fb;
+  border-color: var(--warning);
+}
+.switch input::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--muted);
+  transition: all .15s ease;
+}
+.switch input:checked::after {
+  left: 22px;
+  background: var(--warning);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid var(--outline);
+  background: #f4f6fb;
+  color: var(--text);
+  cursor: pointer;
+}
+.btn[disabled] {
+  opacity: .5;
+  cursor: not-allowed;
+}
+.btn-primary {
+  border-color: #2b3946;
+  background: #f4f6fb;
+  color: var(--primary);
+}
+.btn-danger {
+  border-color: #433030;
+  background: #f4f6fb;
+  color: var(--danger);
+}
+
+.list {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 12px;
+  align-items: start;
+  padding: 12px;
+  border: 1px solid var(--outline);
+  border-radius: 10px;
+  background: #9EE7F9;
+}
+
+.checkbox {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.checkbox[data-checked="true"] {
+  background: var(--text);
+  border-color: var(--text);
+}
+.checkbox svg {
+  width: 14px;
+  height: 14px;
+  color: var(--bg);
+}
+
+.item-head {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.item-title {
+  font-weight: 600;
+}
+.item-title.done {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+.item-meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+.badge {
+  border: 1px solid #4c361e;
+  background: #27190b;
+  color: #ffcc66;
+  font-size: 12px;
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.item-actions {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 720px) {
+  .input-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+
