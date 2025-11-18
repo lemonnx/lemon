@@ -4,14 +4,19 @@ export default function TodoInput({ onSubmit }) {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [important, setImportant] = useState(false);
-	const [deadline, setDeadline] = useState(defaultDeadlineLocal());
+	const [startTime, setStartTime] = useState(defaultDeadlineLocal());
+	const [endTime, setEndTime] = useState(defaultDeadlineLocal());
 
 	const titleValid = useMemo(() => {
 		const t = title.trim();
 		return t.length >= 1 && t.length <= 120;
 	}, [title]);
 	const descValid = useMemo(() => description.length <= 500, [description]);
-	const canSubmit = titleValid && descValid;
+	const timeValid = useMemo(() => {
+		if (!startTime || !endTime) return true; // 允许不设置时间
+		return new Date(startTime) <= new Date(endTime);
+	}, [startTime, endTime]);
+	const canSubmit = titleValid && descValid && timeValid;
 
 	const handleSubmit = useCallback(async (e) => {
 		e.preventDefault();
@@ -20,13 +25,15 @@ export default function TodoInput({ onSubmit }) {
 			title: title.trim(),
 			description: description.trim(),
 			important,
-			deadline: deadline ? new Date(deadline) : null
+			startTime: startTime ? new Date(startTime) : null,
+			endTime: endTime ? new Date(endTime) : null
 		});
 		setTitle('');
 		setDescription('');
 		setImportant(false);
-		setDeadline(defaultDeadlineLocal());
-	}, [canSubmit, onSubmit, title, description, important, deadline]);
+		setStartTime(defaultDeadlineLocal());
+		setEndTime(defaultDeadlineLocal());
+	}, [canSubmit, onSubmit, title, description, important, startTime, endTime]);
 
 	return (
 		<form className="card" onSubmit={handleSubmit} aria-label="新建待办">
@@ -37,12 +44,6 @@ export default function TodoInput({ onSubmit }) {
 					aria-label="标题"
 					value={title}
 					onChange={(e) => setTitle(e.target.value)}
-				/>
-				<input
-					type="datetime-local"
-					aria-label="截止时间"
-					value={deadline}
-					onChange={(e) => setDeadline(e.target.value)}
 				/>
 				<label className="switch" aria-label="重要">
 					<input
@@ -57,6 +58,20 @@ export default function TodoInput({ onSubmit }) {
 					添加
 				</button>
 			</div>
+			<div className="input-row" style={{ marginBottom: 8 }}>
+				<input
+					type="datetime-local"
+					aria-label="开始时间"
+					value={startTime}
+					onChange={(e) => setStartTime(e.target.value)}
+				/>
+				<input
+					type="datetime-local"
+					aria-label="结束时间"
+					value={endTime}
+					onChange={(e) => setEndTime(e.target.value)}
+				/>
+			</div>
 			<textarea
 				placeholder="描述（可选，≤500）"
 				aria-label="描述"
@@ -65,7 +80,7 @@ export default function TodoInput({ onSubmit }) {
 			/>
 			<div className="item-meta" style={{ marginTop: 6 }}>
 				<span style={{ color: canSubmit ? 'var(--muted)' : 'var(--danger)' }}>
-					{!titleValid ? '标题需 1~120 字符' : descValid ? ' ' : '描述长度 ≤ 500'}
+					{!titleValid ? '标题需 1~120 字符' : !descValid ? '描述长度 ≤ 500' : !timeValid ? '结束时间必须晚于开始时间' : ' '}
 				</span>
 			</div>
 		</form>

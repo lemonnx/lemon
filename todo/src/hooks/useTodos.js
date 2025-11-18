@@ -1,5 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { add as apiAdd, done as apiDone, remove as apiRemove, listToday, listTomorrow, listAll, db } from '../api/todo';
+import { 
+	add as apiAdd, 
+	done as apiDone, 
+	remove as apiRemove, 
+	listToday, 
+	listTomorrow, 
+	listAll, 
+	updateStatus,
+	updateStartTime,
+	updateEndTime,
+	getById,
+	db 
+} from '../api/todo';
 
 export function useTodos() {
 	const [view, setView] = useState('today'); // today | tomorrow | all
@@ -45,8 +57,42 @@ export function useTodos() {
 		await reload();
 	}, [reload]);
 
+	const updateTodoStatus = useCallback(async (id, status) => {
+		await updateStatus(id, status);
+		await reload();
+	}, [reload]);
+
+	const updateTodoStartTime = useCallback(async (id, startTime) => {
+		await updateStartTime(id, startTime);
+		await reload();
+	}, [reload]);
+
+	const updateTodoEndTime = useCallback(async (id, endTime) => {
+		await updateEndTime(id, endTime);
+		await reload();
+	}, [reload]);
+
+	const getTodoById = useCallback(async (id) => {
+		return await getById(id);
+	}, []);
+
+	const getAllTodos = useCallback(async () => {
+		return await listAll();
+	}, []);
+
 	const state = useMemo(() => ({ view, todos, loading, error }), [view, todos, loading, error]);
-	const actions = useMemo(() => ({ setView, add, toggleDone, remove, reload }), [setView, add, toggleDone, remove, reload]);
+	const actions = useMemo(() => ({ 
+		setView, 
+		add, 
+		toggleDone, 
+		remove, 
+		reload,
+		updateTodoStatus,
+		updateTodoStartTime,
+		updateTodoEndTime,
+		getTodoById,
+		getAllTodos
+	}), [setView, add, toggleDone, remove, reload, updateTodoStatus, updateTodoStartTime, updateTodoEndTime, getTodoById, getAllTodos]);
 
 	return [state, actions];
 }

@@ -25,7 +25,9 @@ export default function TodoItem({ todo, onToggle, onRemove }) {
 				</div>
 				{todo.description ? <div className="item-meta" style={{ marginTop: 4 }}>{todo.description}</div> : null}
 				<div className="item-meta" style={{ marginTop: 6 }}>
-					截止：{todo.deadline ? formatDateTime(todo.deadline) : '未指定'}
+					{todo.startTime ? `开始：${formatDateTime(todo.startTime)}` : '开始：未指定'} | {todo.endTime ? `结束：${formatDateTime(todo.endTime)}` : '结束：未指定'}
+					{todo.status === 'inProgress' ? <span className="status-badge in-progress">进行中</span> : null}
+					{todo.status === 'partiallyDone' ? <span className="status-badge partially-done">部分完成</span> : null}
 				</div>
 			</div>
 			<div className="item-actions">

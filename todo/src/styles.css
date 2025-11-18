@@ -1,13 +1,17 @@
 :root {
-  --bg: #f4f6fb;
+  --bg: #f0f8ff;
   --card: #FFE411;
-  --muted: #aab2c0;
-  --text: #f4f6fb;
-  --primary: #5ac8fa;
-  --danger: #ff3b30;
-  --success: #34c759;
-  --warning: #ff9f0a;
-  --outline: #2a2f3a;
+  --muted: #6b7280;
+  --text: #1e293b;
+  --primary: #3b82f6;
+  --primary-light: #5ac8fa;
+  --primary-bg: #9EE7F9;
+  --danger: #ef4444;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --outline: #cbd5e1;
+  --yellow: #FFE411;
+  --yellow-dark: #fbbf24;
 }
 
 * { box-sizing: border-box; }
@@ -47,7 +51,7 @@ body {
 .tabs {
   display: inline-flex;
   gap: 8px;
-  background: #9EE7F9;
+  background: var(--primary-bg);
   border: 1px solid var(--outline);
   padding: 4px;
   border-radius: 10px;
@@ -62,9 +66,10 @@ body {
   background: transparent;
 }
 .tab[aria-selected="true"] {
-  background: var(--card);
+  background: var(--yellow);
   color: var(--text);
   border-color: var(--outline);
+  font-weight: 600;
 }
 
 .input-row {
@@ -75,11 +80,16 @@ body {
 
 input[type="text"], textarea, input[type="datetime-local"] {
   width: 100%;
-  background: #f4f6fb;
+  background: #ffffff;
   color: var(--text);
   border: 1px solid var(--outline);
   border-radius: 8px;
   padding: 10px 12px;
+}
+input[type="text"]:focus, textarea:focus, input[type="datetime-local"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 textarea { resize: vertical; min-height: 44px; max-height: 160px; }
 
@@ -93,7 +103,7 @@ textarea { resize: vertical; min-height: 44px; max-height: 160px; }
   appearance: none;
   width: 44px;
   height: 24px;
-  background: #f4f6fb;
+  background: #ffffff;
   border: 1px solid var(--outline);
   border-radius: 999px;
   position: relative;
@@ -101,8 +111,8 @@ textarea { resize: vertical; min-height: 44px; max-height: 160px; }
   cursor: pointer;
 }
 .switch input:checked {
-  background: #f4f6fb;
-  border-color: var(--warning);
+  background: var(--yellow);
+  border-color: var(--yellow-dark);
 }
 .switch input::after {
   content: "";
@@ -117,7 +127,7 @@ textarea { resize: vertical; min-height: 44px; max-height: 160px; }
 }
 .switch input:checked::after {
   left: 22px;
-  background: var(--warning);
+  background: var(--yellow-dark);
 }
 
 .btn {
@@ -128,23 +138,37 @@ textarea { resize: vertical; min-height: 44px; max-height: 160px; }
   padding: 0 14px;
   border-radius: 8px;
   border: 1px solid var(--outline);
-  background: #f4f6fb;
+  background: #ffffff;
   color: var(--text);
   cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+.btn:hover:not([disabled]) {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .btn[disabled] {
   opacity: .5;
   cursor: not-allowed;
 }
 .btn-primary {
-  border-color: #2b3946;
-  background: #f4f6fb;
-  color: var(--primary);
+  border-color: var(--primary);
+  background: var(--primary);
+  color: #ffffff;
+}
+.btn-primary:hover:not([disabled]) {
+  background: var(--primary-light);
+  border-color: var(--primary-light);
 }
 .btn-danger {
-  border-color: #433030;
-  background: #f4f6fb;
+  border-color: var(--danger);
+  background: #ffffff;
   color: var(--danger);
+}
+.btn-danger:hover:not([disabled]) {
+  background: var(--danger);
+  color: #ffffff;
 }
 
 .list {
@@ -161,27 +185,37 @@ textarea { resize: vertical; min-height: 44px; max-height: 160px; }
   padding: 12px;
   border: 1px solid var(--outline);
   border-radius: 10px;
-  background: #9EE7F9;
+  background: var(--primary-bg);
+  transition: all 0.2s ease;
+}
+.item:hover {
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
 }
 
 .checkbox {
   width: 22px;
   height: 22px;
   border-radius: 6px;
-  border: 2px solid var(--muted);
+  border: 2px solid var(--primary);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  background: #ffffff;
+  transition: all 0.2s ease;
+}
+.checkbox:hover {
+  border-color: var(--primary-light);
+  background: rgba(59, 130, 246, 0.1);
 }
 .checkbox[data-checked="true"] {
-  background: var(--text);
-  border-color: var(--text);
+  background: var(--primary);
+  border-color: var(--primary);
 }
 .checkbox svg {
   width: 14px;
   height: 14px;
-  color: var(--bg);
+  color: #ffffff;
 }
 
 .item-head {
@@ -201,12 +235,35 @@ textarea { resize: vertical; min-height: 44px; max-height: 160px; }
   font-size: 12px;
 }
 .badge {
-  border: 1px solid #4c361e;
-  background: #27190b;
-  color: #ffcc66;
+  border: 1px solid var(--yellow-dark);
+  background: var(--yellow);
+  color: var(--text);
   font-size: 12px;
   border-radius: 999px;
   padding: 2px 8px;
+  font-weight: 600;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+.status-badge.in-progress {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.status-badge.partially-done {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--warning);
+  border: 1px solid var(--warning);
 }
 
 .item-actions {
@@ -230,6 +287,56 @@ textarea { resize: vertical; min-height: 44px; max-height: 160px; }
   .input-row {
     grid-template-columns: 1fr;
   }
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(30, 41, 59, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: var(--yellow);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  border: 2px solid var(--primary-bg);
+}
+
+.modal-content h2 {
+  margin: 0 0 16px 0;
+  color: var(--text);
+  font-size: 24px;
+}
+
+.modal-content p {
+  margin: 8px 0;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.modal-content strong {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.modal-content label {
+  color: var(--text);
+  font-weight: 500;
+  font-size: 14px;
 }
 
 
